@@ -46,3 +46,13 @@ async def delete_post(post_id:str):
             posts.pop(index)
             return {"message": "Post deleted successfully"}
     raise HTTPException(status_code=404, detail="Post not found")
+
+@app.put("/posts/{post_id}")
+async def update_post(post_id:str, Updated_post:Post):
+    for index, post in enumerate(posts):
+        if post["id"] == post_id:
+            posts[index]["title"] = Updated_post.title
+            posts[index]["author"] = Updated_post.author
+            posts[index]["content"] = Updated_post.content
+            return {"message": "Post updated successfully"}
+    raise HTTPException(status_code=404, detail="Post not found")
